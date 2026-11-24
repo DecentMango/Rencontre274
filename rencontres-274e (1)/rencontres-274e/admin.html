@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Espace chef de groupe | Rencontres de mi-année 274e</title>
+  <meta name="theme-color" content="#041e42">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar admin-shell">
+    <img class="logo" src="assets/logo.png" alt="274e Scout St-Éphrem">
+    <div class="org">Espace chef de groupe · 274e Saint-Éphrem</div>
+    <div class="spacer"></div>
+    <a class="link-admin" href="index.html">← Page de réservation</a>
+  </header>
+  <div id="demo" class="demo-banner admin-shell hidden"><div>Mode démonstration : connectez-vous avec n'importe quel courriel et le mot de passe <b>demo</b>.</div></div>
+
+  <!-- Connexion -->
+  <main class="shell hidden" id="loginView">
+    <div class="card login">
+      <h1>Espace chef de groupe</h1>
+      <p style="color:var(--muted);margin:0 0 18px">Accès réservé au chef de groupe.</p>
+      <form id="loginForm" class="form-grid">
+        <div><label class="field" for="email">Courriel</label><input class="input" id="email" type="email" autocomplete="username" required></div>
+        <div><label class="field" for="mdp">Mot de passe</label><input class="input" id="mdp" type="password" autocomplete="current-password" required></div>
+        <div id="loginErr" class="alert alert-err hidden"></div>
+        <button class="btn btn-primary btn-block" id="loginBtn">Se connecter</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Tableau de bord -->
+  <main class="shell admin-shell hidden" id="dashView">
+    <div class="dash-head">
+      <div>
+        <h1>Rencontres de mi-année</h1>
+        <p>Année scoute 2026-2027 · <span class="live">Mises à jour en temps réel</span></p>
+      </div>
+      <div class="dash-actions">
+        <button class="btn btn-ghost btn-sm" id="csvBtn">Exporter en CSV</button>
+        <button class="btn btn-ghost btn-sm" id="logoutBtn">Se déconnecter</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="card stat">
+        <div class="k">Unités ayant réservé</div>
+        <div class="v" id="stProg">0 / 7</div>
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="7" id="progBar"><div id="progFill" style="width:0"></div></div>
+        <div class="progress-label"><span id="progPct">0 %</span><span id="progLeft"></span></div>
+      </div>
+      <div class="card stat"><div class="k">Créneaux libres</div><div class="v" id="stLibres">–</div></div>
+      <div class="card stat"><div class="k">À venir</div><div class="v" id="stVenir">–</div></div>
+      <div class="card stat"><div class="k">Terminées</div><div class="v" id="stFini">–</div></div>
+    </div>
+
+    <div class="card">
+      <div class="tabs" role="tablist">
+        <button class="tab on" data-tab="resa">Réservations <span class="count" id="cResa">0</span></button>
+        <button class="tab" data-tab="attente">Unités sans réservation <span class="count" id="cAttente">0</span></button>
+        <button class="tab" data-tab="creneaux">Créneaux <span class="count" id="cCren">0</span></button>
+      </div>
+      <div class="tab-body" id="tab-resa"></div>
+      <div class="tab-body hidden" id="tab-attente"></div>
+      <div class="tab-body hidden" id="tab-creneaux">
+        <form class="slot-add" id="addSlot">
+          <div class="full"><label class="field" for="nsDate">Date</label><input class="input" type="date" id="nsDate" value="2027-01-07" required></div>
+          <div><label class="field" for="nsHeure">Début</label><input class="input" type="time" id="nsHeure" value="18:00" step="900" required></div>
+          <div><label class="field" for="nsDuree">Durée (min)</label><input class="input" type="number" id="nsDuree" value="90" min="15" step="15" required></div>
+          <button class="btn btn-primary full">Ajouter le créneau</button>
+        </form>
+        <div id="slotRows"></div>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="dlg"><form method="dialog" class="dlg" id="dlgForm"></form></dialog>
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/config.js"></script>
+  <script src="assets/api.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
